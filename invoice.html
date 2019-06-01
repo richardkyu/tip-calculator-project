@@ -138,11 +138,21 @@
                                     var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
                                     var tip_calc = $('#Tip').val() /100 *price
                                     var tip = parseFloat(tip_calc.toFixed(2))
+                                    //Error handling conditions
+                                    //1. If the price is negative
                                     if (price<0 || tip_calc <0){
                                         $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
                                     price = Math.abs(price)
                                     tip = Math.abs(tip)
-                                    } 
+                                    }
+                                    //2. If the user is asking for the price on a free meal.
+                                    else if (price === 0){
+                                        $('#userNotice').html("<font color ='red'>You cannot perform a tip calculation on a free meal.</font>")
+                                    }
+                                    //3. If the user does not tip.
+                                    else if (tip === 0){
+                                        $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate anything if you don't tip.</font>")
+                                    }
                                     $('.priceAmount').html(price)
                                     $('.tipAmount').html(tip)
                                     $('#percent').html(parseFloat($('#Tip').val()).toFixed(2)+'%')
