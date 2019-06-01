@@ -134,9 +134,15 @@
                             This script will handle the calculations and necessary type conversions (string, float) as well. */
                             $(document).ready(function () {
                                 $("#takeinput").on("click", function() {
+                                    $('#userNotice').html("")
                                     var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
                                     var tip_calc = $('#Tip').val() /100 *price
                                     var tip = parseFloat(tip_calc.toFixed(2))
+                                    if (price<0 || tip_calc <0){
+                                        $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
+                                    price = Math.abs(price)
+                                    tip = Math.abs(tip)
+                                    } 
                                     $('.priceAmount').html(price)
                                     $('.tipAmount').html(tip)
                                     $('#percent').html(parseFloat($('#Tip').val()).toFixed(2)+'%')
@@ -176,6 +182,7 @@
                             <input type="text" placeholder = "Price" id="Price" /></br>
                             <input type="text" placeholder = "Tip" id="Tip" /></br>
                             <button id="takeinput">Submit Information</button>
+                            <div id = 'userNotice'></div>
                         </tr>
                     </table>
                 </td>
