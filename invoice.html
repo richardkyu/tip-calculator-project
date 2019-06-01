@@ -101,9 +101,11 @@
 
     <!--Font Awesome Stylesheet Import-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="odometer-theme-minimal.css" />
-    <!--Jquery Import-->
+    <!--Javascript Dependencies-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="odometer.js"></script>
 </head>
 
@@ -116,7 +118,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <h5>Richard's Restaurant <i class="fas fa-hamburger"></i></h5>
+                                <h1>Richard's Restaurant <i class="fas fa-hamburger"></i></h1>
                             </td>
                             <!--Scripts, to be included in javascript file once basic coding is complete.-->
                             <script>
@@ -136,14 +138,16 @@
                                 $("#takeinput").on("click", function() {
                                     $('#userNotice').html("")
                                     var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
+                                    console.log(price)
+                                    var tip = parseFloat($('#Tip').val()).toFixed(2)
                                     var tip_calc = $('#Tip').val() /100 *price
-                                    var tip = parseFloat(tip_calc.toFixed(2))
+                                    
                                     //Error handling conditions
                                     //1. If the price is negative
-                                    if (price<0 || tip_calc <0){
+                                    if (price<0 || tip <0){
                                         $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
                                     price = Math.abs(price)
-                                    tip = Math.abs(tip)
+                                    tip_calc = Math.abs(tip_calc)
                                     }
                                     //2. If the user is asking for the price on a free meal.
                                     else if (price === 0){
@@ -153,13 +157,22 @@
                                     else if (tip === 0){
                                         $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate anything if you don't tip.</font>")
                                     }
+                                    //4. If the user forgets to enter in a value.
+                                    else if (isNaN(price)||isNaN(tip)){
+                                        $('#userNotice').html("<font color ='red'>Please enter values in both fields!</font>")
+                                        price=0
+                                        tip=0
+                                        
+                                    }
+                                    var tip_amount = parseFloat(tip_calc.toFixed(2))
+
                                     $('.priceAmount').html(price)
-                                    $('.tipAmount').html(tip)
-                                    $('#percent').html(parseFloat($('#Tip').val()).toFixed(2)+'%')
-                                    $('.odometer_total').html((tip+price).toFixed(2))
+                                    $('.tipAmount').html(tip_amount)
+                                    $('#percent').html(Math.abs(parseFloat(tip)).toFixed(2)+'%')
+                                    $('.odometer_total').html((tip_amount+price).toFixed(2))
                                 });
 
-                            })
+                            });
 
                             </script>
                             <td>
@@ -214,7 +227,14 @@
             
             <tr class="details">
                 <td>
-                    Check
+                <!--Dropdown for payment types.-->
+                    <div class="dropdown">
+                        <select id="paymentMethod">
+                                <option value="Credit">Credit</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Check">Check</option>
+                        </select>
+                    </div>
                 </td>
                 
                 <td>
