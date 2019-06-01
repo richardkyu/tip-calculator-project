@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>A simple, clean, and responsive HTML invoice template</title>
-    
+    <title>Tip Calculator Invoice</title>
+    <!--Style, to be included in style.css sheet once coding is complete.-->
     <style>
 
     .invoice-box {
@@ -98,9 +98,15 @@
         text-align: left;
     }
     </style>
+
+    <!--Font Awesome Stylesheet Import-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="odometer-theme-minimal.css" />
+    <!--Jquery Import-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="odometer.js"></script>
 </head>
+
 
 <body>
     <div class="invoice-box">
@@ -112,7 +118,9 @@
                             <td class="title">
                                 <h5>Richard's Restaurant <i class="fas fa-hamburger"></i></h5>
                             </td>
+                            <!--Scripts, to be included in javascript file once basic coding is complete.-->
                             <script>
+                            //Script to assign billing time and due date of bill based on current system time.
                             $(document).ready(function () {
                                 var d = new Date(Date.now()).toLocaleString();
                                 $("#currentDate").html(d)
@@ -121,6 +129,22 @@
                                 dueDate.setDate(dueDate.getDate() + 7);
                                 $('#dueDate').html(dueDate.toLocaleString())
                             })
+                            
+                            /*Script to handle the intake of information such as the tip amount and price of the meal.
+                            This script will handle the calculations and necessary type conversions (string, float) as well. */
+                            $(document).ready(function () {
+                                $("#takeinput").on("click", function() {
+                                    var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
+                                    var tip_calc = $('#Tip').val() /100 *price
+                                    var tip = parseFloat(tip_calc.toFixed(2))
+                                    $('.priceAmount').html(price)
+                                    $('.tipAmount').html(tip)
+                                    $('#percent').html(parseFloat($('#Tip').val()).toFixed(2)+'%')
+                                    $('.odometer_total').html((tip+price).toFixed(2))
+                                });
+
+                            })
+
                             </script>
                             <td>
                                 Invoice #: 1<br>
@@ -137,21 +161,30 @@
                     <table>
                         <tr>
                             <td>
-                                Sparksuite, Inc.<br>
-                                12345 Sunny Road<br>
-                                Sunnyville, CA 12345
+                                Rutgers Coding Bootcamp<br>
+                                161 Newkirk Street<br>
+                                Jersey City, NJ 07306
                             </td>
                             
                             <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
+                                Trilogy Education Services<br>
+                                Coding Challenge<br>
+                                example@example.com
                             </td>
+                        </tr>
+                        <tr>
+                            <input type="text" placeholder = "Price" id="Price" /></br>
+                            <input type="text" placeholder = "Tip" id="Tip" /></br>
+                            <button id="takeinput">Submit Information</button>
                         </tr>
                     </table>
                 </td>
+                
+                
             </tr>
+            <!--Input textfields for user-entered information -->
             
+
             <tr class="heading">
                 <td>
                     Payment Method
@@ -178,45 +211,39 @@
                 </td>
                 
                 <td>
-                    Price
+                    Price ($)
                 </td>
             </tr>
             
             <tr class="item">
                 <td>
-                    Website design
+                    Order ($)
                 </td>
                 
                 <td>
-                    $300.00
+                    <div class = 'odometer priceAmount'>0.00</div>
                 </td>
             </tr>
             
             <tr class="item">
                 <td>
-                    Hosting (3 months)
+                    Tip <div id = 'percent'></div>
                 </td>
                 
                 <td>
-                    $75.00
-                </td>
-            </tr>
-            
-            <tr class="item last">
-                <td>
-                    Domain name (1 year)
-                </td>
-                
-                <td>
-                    $10.00
+                    <div class = 'odometer tipAmount'>0.00</div>
                 </td>
             </tr>
             
             <tr class="total">
-                <td></td>
+                <td>
+                    <input type="text" placeholder = "# of people?" id="split" />
+                    <button id="splitNumber">Split</button>
+
+                </td>
                 
                 <td>
-                   Total: $385.00
+                   Total:  <div class ='odometer odometer_total' id = 'total'>0.00</div>
                 </td>
             </tr>
         </table>
