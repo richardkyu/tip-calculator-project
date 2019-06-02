@@ -20,6 +20,7 @@ $.each($(".dropdown option:selected"), function(){
 $("select").on('change', function(){
     $('#paymentDisplay').html('');
     $('#paymentInputs').html('');
+    $('#creditCardAlert').html('')
     $.each($(".dropdown option:selected"), function(){            
             selection = $(this).val();  
             $('#payAs').html(selection);
@@ -34,7 +35,7 @@ $("select").on('change', function(){
         console.log("Credit")
         $('#paymentDisplay').html('Card Number: ')
         $('#paymentInputs').html('<input type="text" placeholder = "Card No." id="cardNo" /></br><input type="text" placeholder = "CVV" id="CVV" />')
-
+        
     }
     else if($("#paymentMethod option:selected").text() === 'Cash'){
         console.log('Cash')
@@ -44,6 +45,8 @@ $("select").on('change', function(){
     }
 });
 
+
+
 //Function to check if user mixed characters or not.
 var isFloat = function(n) {/*console.log(parseFloat(n),n);*/ return parseFloat(n) == n };
 /*Script to handle the intake of information such as the tip amount and price of the meal.
@@ -52,6 +55,7 @@ This script will handle the calculations and necessary type conversions (string,
     
     $("#takeinput").on("click", function() {
         $('#userNotice').html("")
+        
         var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
         var tip = parseFloat($('#Tip').val()).toFixed(2)
         var tip_calc = $('#Tip').val() /100 *price
@@ -59,7 +63,24 @@ This script will handle the calculations and necessary type conversions (string,
             var cardNo = parseFloat($('#cardNo').val()).toString()
             var CVV = parseFloat($('#CVV').val()).toString()
 
-            $('#paymentDisplay').html('Card Number: '+cardNo+'</br>CVV: '+CVV)
+            $('#paymentDisplay').html('Card Number: '+cardNo+'</br>CVV: '+CVV+'</br>'+
+            '<select tabindex="11" id="CardType" style="margin-left: 10px;">'
+                +'<option value="AmEx">American Express</option>'
+                +'<option value="CarteBlanche">Carte Blanche</option>'
+                +'<option value="DinersClub">Diners Club</option>'
+                +'<option value="Discover">Discover</option>'
+                +'<option value="EnRoute">enRoute</option>'
+                +'<option value="JCB">JCB</option>'
+                +'<option value="Maestro">Maestro</option>'
+                +'<option value="MasterCard">MasterCard</option>'
+                +'<option value="Solo">Solo</option>'
+                +'<option value="Switch">Switch</option>'
+                +'<option value="Visa">Visa</option>'
+                +'<option value="VisaElectron">Visa Electron</option>'
+                +'<option value="LaserCard">Laser</option>'
+            +'</select> <input type="text" id="CardNumber" maxlength="24" size="20" style="margin-left: 10px;"> <button id="mybutton" type="button" onclick="testCreditCard();" style="margin-left: 10px; color: #008000;">Validate</button>')
+            
+            document.getElementById('CardNumber').value =$('#cardNo').val();
         }
         //Error handling conditions
 
@@ -116,3 +137,15 @@ This script will handle the calculations and necessary type conversions (string,
     });
 
 });
+
+//Function to check if credit card is valid.
+function testCreditCard() {
+    myCardNo = $('#cardNo').val();
+    myCardType = document.getElementById('CardType').value;
+    if (checkCreditCard(myCardNo, myCardType)) {
+        alert("Credit card has a valid format")
+    } else {
+        $('#creditCardAlert').html("<font color ='red'>The credit card number you have entered is not valid.</font>")
+        //alert(ccErrors[ccErrorNo])
+    };
+}
