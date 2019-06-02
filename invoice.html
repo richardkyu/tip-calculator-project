@@ -135,33 +135,37 @@
                             //Function to handle dropdown menu and payment types.
                             //Get the initially selected value.
                             var selection
-                            $.each($(".dropdown option:selected"), function(){            
-                                        selection = $(this).val()
+                            $.each($(".dropdown option:selected"), function(){         
+                                        selection = $(this).val()  
                                         $('#payAs').html(selection)
                                         
                             });
 
                             $("select").on('change', function(){
+                                $('#paymentDisplay').html('')
                                 $.each($(".dropdown option:selected"), function(){            
-                                        selection = $(this).val()
+                                        selection = $(this).val()  
                                         $('#payAs').html(selection)
                                         
                                 });
-                                console.log(selection)
-                            });
-
-                            //Checking if conditions work. Newly added in commit.
-
-                            if (selection==='Credit'){
-                                console.log("Credit")
-                            }
-                            else if(selection === 'Cash'){
-                                console.log('Cash')
-                            }
-                            else if (selection === 'Card'){
-                                console.log('Card')
-                            }
+                                
                             
+
+                                //Checking if conditions work.
+                                
+                                if ($("#paymentMethod option:selected").text()==='Credit'){
+                                    console.log("Credit")
+                                    $('#paymentDisplay').html('Card Number: ')
+                                    $('#paymentInputs').html('<input type="text" placeholder = "Card No." id="cardNo" /></br><input type="text" placeholder = "CVV" id="CVV" />')
+
+                                }
+                                else if($("#paymentMethod option:selected").text() === 'Cash'){
+                                    console.log('Cash')
+                                }
+                                else if ($("#paymentMethod option:selected").text() === 'Check'){
+                                    console.log('Check')
+                                }
+                            });
 
                             //Function to check if user mixed characters or not.
                             var isFloat = function(n) {/*console.log(parseFloat(n),n);*/ return parseFloat(n) == n };
@@ -174,7 +178,10 @@
                                     var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
                                     var tip = parseFloat($('#Tip').val()).toFixed(2)
                                     var tip_calc = $('#Tip').val() /100 *price
+                                    var cardNo = parseFloat($('#cardNo').val()).toString()
+                                    var CVV = parseFloat($('#CVV').val()).toString()
 
+                                    $('#paymentDisplay').html('Card Number: '+cardNo+'</br>CVV: '+CVV)
                                     //Error handling conditions
 
                                     //1. If the user enters in letters or mix of letters and numbers in either field.
@@ -254,6 +261,7 @@
                         <tr>
                             <input type="text" placeholder = "Price" id="Price" /></br>
                             <input type="text" placeholder = "Tip (%)" id="Tip" /></br>
+                            <div id = 'paymentInputs'></div>
                             <button id="takeinput">Submit Information</button>
                             <div id = 'userNotice'></div>
                         </tr>
@@ -280,8 +288,8 @@
                 <!--Dropdown for payment types.-->
                     <div id = 'dropdown' class="dropdown">
                         <select id="paymentMethod">
-                            <option value="Credit">Credit</option>
                             <option value="Cash">Cash</option>
+                            <option value="Credit">Credit</option>
                             <option value="Check">Check</option>
                         </select>
                     </div>
