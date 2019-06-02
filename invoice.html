@@ -134,20 +134,33 @@
                             
                             //Function to handle dropdown menu and payment types.
                             //Get the initially selected value.
+                            var selection
                             $.each($(".dropdown option:selected"), function(){            
-                                        var selectedValue = $(this).val()
-                                        $('#payAs').html(selectedValue)
-                                        console.log(selectedValue)
+                                        selection = $(this).val()
+                                        $('#payAs').html(selection)
+                                        
                             });
 
                             $("select").on('change', function(){
                                 $.each($(".dropdown option:selected"), function(){            
-                                        var selectedValue = $(this).val()
-                                        $('#payAs').html(selectedValue)
-                                        console.log(selectedValue)
+                                        selection = $(this).val()
+                                        $('#payAs').html(selection)
+                                        
                                 });
-                                
+                                console.log(selection)
                             });
+
+                            //Checking if conditions work. Newly added in commit.
+
+                            if (selection==='Credit'){
+                                console.log("Credit")
+                            }
+                            else if(selection === 'Cash'){
+                                console.log('Cash')
+                            }
+                            else if (selection === 'Card'){
+                                console.log('Card')
+                            }
                             
 
                             //Function to check if user mixed characters or not.
