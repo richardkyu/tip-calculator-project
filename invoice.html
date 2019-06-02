@@ -3,110 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Tip Calculator Invoice</title>
-    <!--Style, to be included in style.css sheet once coding is complete.-->
-    <style>
-
-    .invoice-box {
-        max-width: 800px;
-        margin: auto;
-        padding: 30px;
-        border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-        font-size: 16px;
-        line-height: 24px;
-        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        color: #555;
-    }
-    
-    .invoice-box table {
-        width: 100%;
-        line-height: inherit;
-        text-align: left;
-    }
-    
-    .invoice-box table td {
-        padding: 5px;
-        vertical-align: top;
-    }
-    
-    .invoice-box table tr td:nth-child(2) {
-        text-align: right;
-    }
-    
-    .invoice-box table tr.top table td {
-        padding-bottom: 20px;
-    }
-    
-    .invoice-box table tr.top table td.title {
-        font-size: 45px;
-        line-height: 45px;
-        color: #333;
-    }
-    
-    .invoice-box table tr.information table td {
-        padding-bottom: 40px;
-    }
-    
-    .invoice-box table tr.heading td {
-        background: #eee;
-        border-bottom: 1px solid #ddd;
-        font-weight: bold;
-    }
-    
-    .invoice-box table tr.details td {
-        padding-bottom: 20px;
-    }
-    
-    .invoice-box table tr.item td{
-        border-bottom: 1px solid #eee;
-    }
-    
-    .invoice-box table tr.item.last td {
-        border-bottom: none;
-    }
-    
-    .invoice-box table tr.total td:nth-child(2) {
-        border-top: 2px solid #eee;
-        font-weight: bold;
-    }
-    
-    @media only screen and (max-width: 600px) {
-        .invoice-box table tr.top table td {
-            width: 100%;
-            display: block;
-            text-align: center;
-        }
-        
-        .invoice-box table tr.information table td {
-            width: 100%;
-            display: block;
-            text-align: center;
-        }
-    }
-    
-    /** RTL **/
-    .rtl {
-        direction: rtl;
-        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-    }
-    
-    .rtl table {
-        text-align: right;
-    }
-    
-    .rtl table tr td:nth-child(2) {
-        text-align: left;
-    }
-    </style>
-
-    <!--Font Awesome Stylesheet Import-->
+    <!--CSS Stylesheet Imports-->
+    <link rel ='stylesheet' href = 'css/style.css'/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="odometer-theme-minimal.css" />
+    <link rel="stylesheet" href="css/odometer-theme-minimal.css" />
     <!--Javascript Dependencies-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="odometer.js"></script>
+    <script src="js/odometer.js"></script>
+    
 </head>
 
 
@@ -120,118 +26,8 @@
                             <td class="title">
                                 <h1>Richard's Restaurant <i class="fas fa-hamburger"></i></h1>
                             </td>
-                            <!--Scripts, to be included in javascript file once basic coding is complete.-->
-                            <script>
-                            //Script to assign billing time and due date of bill based on current system time.
-                            $(document).ready(function () {
-                                var d = new Date(Date.now()).toLocaleString();
-                                $("#currentDate").html(d)
-                                var dueDate = new Date();
-                                //add a week to the date
-                                dueDate.setDate(dueDate.getDate() + 7);
-                                $('#dueDate').html(dueDate.toLocaleString())
                             
                             
-                            //Function to handle dropdown menu and payment types.
-                            //Get the initially selected value.
-                            var selection
-                            $.each($(".dropdown option:selected"), function(){         
-                                        selection = $(this).val()  
-                                        $('#payAs').html(selection)
-                                        
-                            });
-
-                            $("select").on('change', function(){
-                                $('#paymentDisplay').html('')
-                                $.each($(".dropdown option:selected"), function(){            
-                                        selection = $(this).val()  
-                                        $('#payAs').html(selection)
-                                        
-                                });
-                                
-                            
-
-                                //Checking if conditions work.
-                                
-                                if ($("#paymentMethod option:selected").text()==='Credit'){
-                                    console.log("Credit")
-                                    $('#paymentDisplay').html('Card Number: ')
-                                    $('#paymentInputs').html('<input type="text" placeholder = "Card No." id="cardNo" /></br><input type="text" placeholder = "CVV" id="CVV" />')
-
-                                }
-                                else if($("#paymentMethod option:selected").text() === 'Cash'){
-                                    console.log('Cash')
-                                }
-                                else if ($("#paymentMethod option:selected").text() === 'Check'){
-                                    console.log('Check')
-                                }
-                            });
-
-                            //Function to check if user mixed characters or not.
-                            var isFloat = function(n) {/*console.log(parseFloat(n),n);*/ return parseFloat(n) == n };
-                            /*Script to handle the intake of information such as the tip amount and price of the meal.
-                            This script will handle the calculations and necessary type conversions (string, float) as well. */
-                            
-                                
-                                $("#takeinput").on("click", function() {
-                                    $('#userNotice').html("")
-                                    var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
-                                    var tip = parseFloat($('#Tip').val()).toFixed(2)
-                                    var tip_calc = $('#Tip').val() /100 *price
-                                    var cardNo = parseFloat($('#cardNo').val()).toString()
-                                    var CVV = parseFloat($('#CVV').val()).toString()
-
-                                    $('#paymentDisplay').html('Card Number: '+cardNo+'</br>CVV: '+CVV)
-                                    //Error handling conditions
-
-                                    //1. If the user enters in letters or mix of letters and numbers in either field.
-                                    if(
-                                    //Check if there is a mix of letters and numbers, or just letters.
-                                    (isFloat($('#Price').val())===false || isFloat($('#Tip').val())===false) 
-                                    && 
-                                    //Pass this condition if there is no value input (so that Condition 2 will catch and notify user of missing values.)
-                                    ($('#Price').val() != '' && $('#Tip').val()!='')
-                                    ){
-                                        $('#userNotice').html("<font color ='red'>Do not mix numbers and letters.</br>Please only input positive, nonzero numbers.</font>")
-                                    }
-                                    
-                                    //2. If the user forgets to enter in a value.
-                                    else if (isNaN(price)||isNaN(tip)) {
-                                        $('#userNotice').html("<font color ='red'>Please enter valid values in both fields!</font>")
-                                        
-                                    }
-
-                                    //3. If the price is negative
-                                    else if (price<0 || tip <0){
-                                        $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
-                                    price = Math.abs(price)
-                                    tip_calc = Math.abs(tip_calc)
-                                    }
-
-                                    //4. If the user is asking for the price on a free meal.
-                                    else if (price === 0){
-                                        $('#userNotice').html("<font color ='red'>You cannot perform a tip calculation on a free meal.</font>")
-                                    }
-
-                                    //5. If the user does not tip.
-                                    else if (tip === 0){
-                                        $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate anything if you don't tip.</font>")
-                                    }
-                                    
-                                    //If all error conditions are passed, populate the appropriate fields.
-                                    else{
-                                    var tip_amount = parseFloat(tip_calc.toFixed(2))
-
-                                    $('.priceAmount').html(price)
-                                    $('.tipAmount').html(tip_amount)
-                                    $('#percent').html(Math.abs(parseFloat(tip)).toFixed(2)+'%')
-                                    $('.odometer_total').html((tip_amount+price).toFixed(2))
-                                    }
-                                });
-
-                            });
-                            
-                            </script>
                             <td>
                                 Invoice #: 1<br>
                                 Created: <b><div id = 'currentDate'></div></b><br>
@@ -293,9 +89,11 @@
                             <option value="Check">Check</option>
                         </select>
                     </div>
+                <!--End Dropdown-->
                 </td>
                 
                 <td>
+                    <!--Payment Information Such as Card Info or CVV for credit.-->
                     <div id ='paymentDisplay'></div>
                 </td>
             </tr>
@@ -344,4 +142,6 @@
         </table>
     </div>
 </body>
+<!--Script to handle calculations and other front-end features.-->
+<script src="js/logic.js"></script>
 </html>
