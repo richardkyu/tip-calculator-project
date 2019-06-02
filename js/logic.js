@@ -165,7 +165,21 @@ var total_outer
         else if ($('#split').val()===''){
             $('#splitNotify').html("<font color = 'red'>Please enter in a number.</font>")
             
-            //Make notification disappear after one second.
+            setTimeout(function () {
+                $('#splitNotify').html('')
+            },1500);
+        }
+        else if ($('#split').val()<=0){
+            $('#splitNotify').html('<font color = "red">At least one person must pay for the meal.</font>')
+            
+            setTimeout(function () {
+                $('#splitNotify').html('')
+            },1500);
+        }
+
+        else if (isFloat($('#split').val())==false){
+            $('#splitNotify').html('<font color = "red">Type in a number.</font>')
+            
             setTimeout(function () {
                 $('#splitNotify').html('')
             },1500);
