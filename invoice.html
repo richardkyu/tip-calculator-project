@@ -130,12 +130,32 @@
                                 //add a week to the date
                                 dueDate.setDate(dueDate.getDate() + 7);
                                 $('#dueDate').html(dueDate.toLocaleString())
-                            })
+                            
+                            
+                            //Function to handle dropdown menu and payment types.
+                            //Get the initially selected value.
+                            $.each($(".dropdown option:selected"), function(){            
+                                        var selectedValue = $(this).val()
+                                        $('#payAs').html(selectedValue)
+                                        console.log(selectedValue)
+                            });
+
+                            $("select").on('change', function(){
+                                $.each($(".dropdown option:selected"), function(){            
+                                        var selectedValue = $(this).val()
+                                        $('#payAs').html(selectedValue)
+                                        console.log(selectedValue)
+                                });
+                                
+                            });
+                            
+
                             //Function to check if user mixed characters or not.
                             var isFloat = function(n) {/*console.log(parseFloat(n),n);*/ return parseFloat(n) == n };
                             /*Script to handle the intake of information such as the tip amount and price of the meal.
                             This script will handle the calculations and necessary type conversions (string, float) as well. */
-                            $(document).ready(function () {
+                            
+                                
                                 $("#takeinput").on("click", function() {
                                     $('#userNotice').html("")
                                     var price = parseFloat(parseFloat($('#Price').val()).toFixed(2))
@@ -190,7 +210,7 @@
                                 });
 
                             });
-
+                            
                             </script>
                             <td>
                                 Invoice #: 1<br>
@@ -220,7 +240,7 @@
                         </tr>
                         <tr>
                             <input type="text" placeholder = "Price" id="Price" /></br>
-                            <input type="text" placeholder = "Tip" id="Tip" /></br>
+                            <input type="text" placeholder = "Tip (%)" id="Tip" /></br>
                             <button id="takeinput">Submit Information</button>
                             <div id = 'userNotice'></div>
                         </tr>
@@ -238,24 +258,24 @@
                 </td>
                 
                 <td>
-                    Check #
+                    <div id = 'payAs'></div>
                 </td>
             </tr>
             
             <tr class="details">
                 <td>
                 <!--Dropdown for payment types.-->
-                    <div class="dropdown">
+                    <div id = 'dropdown' class="dropdown">
                         <select id="paymentMethod">
-                                <option value="Credit">Credit</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Check">Check</option>
+                            <option value="Credit">Credit</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Check">Check</option>
                         </select>
                     </div>
                 </td>
                 
                 <td>
-                    1000
+                    <div id ='paymentDisplay'></div>
                 </td>
             </tr>
             
