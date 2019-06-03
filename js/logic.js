@@ -1,15 +1,16 @@
-//Script to assign billing time and due date of bill based on current system time.
+//The majority of this script will use jQuery to process all of the requirements.
+
+//1. Script to assign billing time and due date of bill based on current system time.
 $(document).ready(function () {
     var d = new Date(Date.now()).toLocaleString();
     $("#currentDate").html(d)
     var dueDate = new Date();
-    //add a week to the date
-    dueDate.setDate(dueDate.getDate() + 7);
+    //Add two weeks to the date to obtain the date when the bill is due.
+    dueDate.setDate(dueDate.getDate() + 14);
     $('#dueDate').html(dueDate.toLocaleString())
 
 
-//Function to handle dropdown menu and payment types.
-//Get the initially selected value.
+//2. Function to handle dropdown menu and payment types.
 var selection;
 $.each($(".dropdown option:selected"), function(){         
             selection = $(this).val();  
@@ -17,6 +18,7 @@ $.each($(".dropdown option:selected"), function(){
             
 });
 
+//Do things once an option is selected from the dropdown.
 $("select").on('change', function(){
     $('#paymentDisplay').html('');
     $('#paymentInputs').html('');
@@ -29,8 +31,7 @@ $("select").on('change', function(){
     
 
 
-    //Checking if conditions work.
-    
+    //Checking if conditions work in console + having a custom display for credit card. 
     if ($("#paymentMethod option:selected").text()==='Credit'){
         console.log("Credit")
         $('#paymentDisplay').html('Card Number: ')
@@ -47,14 +48,18 @@ $("select").on('change', function(){
 
 
 
-//Function to check if user mixed characters or not.
+//3.Function to check if user mixed characters or not.
 var isFloat = function(n) {/*console.log(parseFloat(n),n);*/ return parseFloat(n) == n };
-/*Script to handle the intake of information such as the tip amount and price of the meal.
-This script will handle the calculations and necessary type conversions (string, float) as well. */
+
+//Declaring variables so that they can be used in the split calculation later on. (i.e. so that they do not only exist for the initial calculation).
 var price_outer
 var tip_outer
 var total_outer
-    
+
+
+/* 4. Script to handle the intake of information such as the tip amount and price of the meal.
+This script will handle the calculations and necessary type conversions (string, float) as well. */
+//Execute the script once "Submit Information" is clicked on the HTML.
     $("#takeinput").on("click", function() {
         $('#userNotice').html("")
         $('#splitPrice').html('')
@@ -98,21 +103,33 @@ var total_outer
         ($('#Price').val() != '' && $('#Tip').val()!='')
         ){
             $('#userNotice').html("<font color ='red'>Do not mix numbers and letters.</br>Please only input positive, nonzero numbers.</font>")
+        
+            setTimeout(function () {
+                $('#userNotice').html('')
+            },1500);
         }
         
         //2. If the user forgets to enter in a value.
         else if (isNaN(price)||isNaN(tip)) {
             $('#userNotice').html("<font color ='red'>Please enter valid values in all fields!</font>")
             
+            setTimeout(function () {
+                $('#userNotice').html('')
+            },2500);
         }
 
         //3. If the price is negative
         else if (price<0 || tip <0){
-            $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
+        $('#userNotice').html("<font color ='red'>Please do not enter negative numbers!</br>We will take the absolute value of your provided values for calculation.</font>")
+        
+            setTimeout(function () {
+                $('#userNotice').html('')
+            },3500);
         price = Math.abs(price)
         price_outer = price
         tip_calc = Math.abs(tip_calc)
         tip_outer = tip_calc
+
         //Continue to process calculations even if negative.
         var tip_amount = parseFloat(tip_calc.toFixed(2))
 
@@ -127,11 +144,17 @@ var total_outer
         //4. If the user is asking for the price on a free meal.
         else if (price === 0){
             $('#userNotice').html("<font color ='red'>You cannot perform a tip calculation on a free meal.</font>")
+            setTimeout(function () {
+                $('#userNotice').html('')
+            },2500);
         }
 
         //5. If the user does not tip.
-        else if (tip === 0){
-            $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate anything if you don't tip.</font>")
+        else if (tip == 0){
+            $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate the price if you don't tip.</font>")
+            setTimeout(function () {
+                $('#userNotice').html('')
+            },3500);
         }
         
         //If all error conditions are passed, populate the appropriate fields.
@@ -147,7 +170,7 @@ var total_outer
         total_outer = tip_amount+price
         }
     });
-    //Function to add the calculations for split.
+    //5. Function to add the calculations for split.
     
     $("#splitNumber").on("click", function() {
         //console.log($('#split').val())
@@ -200,7 +223,7 @@ var total_outer
 });
 
 
-//Function to check if credit card is valid.
+//6. Function to check if credit card is valid.
 function testCreditCard() {
     myCardNo = $('#cardNo').val();
     myCardType = document.getElementById('CardType').value;
