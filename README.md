@@ -1,5 +1,7 @@
 # Tip Calculator Project
 
+### **Please [click here](https://tip-calculation-project.herokuapp.com/invoice.html) to visit the app page.**
+
 Tip calculator with interactive interface for coding challenge. Simple program that takes in inputs of price and tip percentage and returns the price, the tip amount based on the tip percentage, and the total bill. The program also allows the user to split the bill and will calculate those values in terms of order price, tip amount, and total amount.
 
 ## **How It Works**
