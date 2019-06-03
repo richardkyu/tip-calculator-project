@@ -17,7 +17,7 @@ It just checks to make sure that the format is valid - make sure the dropdown me
 
 Below is an example:
 
-![Preview](https://imgur.com/a/gnHYZ3k)
+![Preview](https://i.imgur.com/fGpxUpv.png)
 
 #
 
@@ -31,29 +31,29 @@ A series of if - else if - else statements in the logic.js file handles a set of
 * The user will receive a red prompt at the bottom of the submit information button prompting them to fill out both values. No calculation will be processed, of course. 
 * This failure condition will take precedence over other failure conditions. For example, if one value is missing and the other is negative, then the prompt to appear will concern only the missing value.
 
-![Preview](https://imgur.com/a/aG8Ak8E)
+![Preview](https://i.imgur.com/afbnqoX.png)
 
 **Negative Numbers**
 * If one or more of the the user's inputs is negative, the program will prompt the user to make their number positive, but it will still perform the calculation by taking the absolute value of that number. A red prompt will be triggered and then disappear after about two seconds to notify the user of the issue with their input.
 
-![Preview](https://imgur.com/a/8LuwxLm)
+![Preview](https://i.imgur.com/zoqkBQQ.png)
 
 **User Inputs a Zero Price**
 
 * If the user inputs a zero price, they will be prompted to rectify the fact that they want to perform a tip calculation on a free meal.
 
-![Preview](https://imgur.com/a/Lxfdo0J)
+![Preview](https://i.imgur.com/xX30mG2.png)
 
 **User Does Not Tip**
 * The user will be informed that it is rude not to tip, and that no calculation will be performed because it does not make sense to calculate a tip when no tip is given.
 
-![Preview](https://imgur.com/a/BaQeGSJ)
+![Preview](https://i.imgur.com/7w5NTGx.png)
 
 **User Mixes Letters and Numbers**
 
 * If the user adds in letters or other unexpected symbols such as "-" or "*", they will receive a prompt informing them that they need to remove those symbols and that they cannot mix letters or special characters with numbers.
 
-![Preview](https://imgur.com/a/1BAyrgJ)
+![Preview](https://i.imgur.com/ax4K3Al.png)
 
 After the user enters in a valid number - as defined by a value that doesn't fall into any of the above categories - they will have an option to split. Note that if the user attempts to enter in a value into the split input before a calculation for a tip is made, they will receive a message prompting them that they must first enter in a price and tip, then receive a calculation before they can split. The split input also will catch errors such as negative numbers, missing input, and inappropriate characters.
 
@@ -74,7 +74,7 @@ Below is a preview of the template format.
 The second tool that I used to achieve some of the visual impact I wanted for the price displays was [odometer.js by Zack Bloom](https://github.hubspot.com/odometer/docs/welcome/). I wanted a loading effect after the user pressed the submit information button that would make it obvious to them that their calculation had just been processed. Like its name, odometer.js allows users to pass a number to a odometer classed element in the HTML DOM, and it will then animate that number.
 
 #### Preview
-![Preview](https://imgur.com/a/kirNkgK)
+![Preview](https://i.imgur.com/YypVumS.png)
 
 ### 3. Credit Card Validation Script.
 
