@@ -106,7 +106,7 @@ This script will handle the calculations and necessary type conversions (string,
         
             setTimeout(function () {
                 $('#userNotice').html('')
-            },1500);
+            },5500);
         }
         
         //2. If the user forgets to enter in a value.
@@ -115,7 +115,7 @@ This script will handle the calculations and necessary type conversions (string,
             
             setTimeout(function () {
                 $('#userNotice').html('')
-            },2500);
+            },5500);
         }
 
         //3. If the price is negative
@@ -124,7 +124,7 @@ This script will handle the calculations and necessary type conversions (string,
         
             setTimeout(function () {
                 $('#userNotice').html('')
-            },3500);
+            },5500);
         price = Math.abs(price)
         price_outer = price
         tip_calc = Math.abs(tip_calc)
@@ -146,7 +146,7 @@ This script will handle the calculations and necessary type conversions (string,
             $('#userNotice').html("<font color ='red'>You cannot perform a tip calculation on a free meal.</font>")
             setTimeout(function () {
                 $('#userNotice').html('')
-            },2500);
+            },5500);
         }
 
         //5. If the user does not tip.
@@ -154,7 +154,7 @@ This script will handle the calculations and necessary type conversions (string,
             $('#userNotice').html("<font color ='red'>It's rude not to tip.</br>Also, you don't need to calculate the price if you don't tip.</font>")
             setTimeout(function () {
                 $('#userNotice').html('')
-            },3500);
+            },5500);
         }
         
         //If all error conditions are passed, populate the appropriate fields.
